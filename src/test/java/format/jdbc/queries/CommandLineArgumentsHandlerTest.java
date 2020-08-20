@@ -2,6 +2,7 @@ package format.jdbc.queries;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.junit.Assert.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,6 +32,15 @@ public class CommandLineArgumentsHandlerTest {
 		assertThat(commandLineArgumentsMap.get("input")).isEqualTo("server.log");
 	}
 
+	@Test
+	public void whenAbsolutePathsAreSent_parseShouldReturn_absolutePath() throws Exception {
+		String [] args = new String[] {"-input=/tmp/someDirectory/my_jdbc.log","-output=jdbc.log"};
+		CommandLineArgumentsHandler cli = new CommandLineArgumentsHandler();
+		Map<String,String> commandLineArgumentsMap =  new HashMap<String, String>();
+		commandLineArgumentsMap = cli.parse(args);
+		assertThat(commandLineArgumentsMap).containsEntry("input","/tmp/someDirectory/my_jdbc.log");
+		assertThat(commandLineArgumentsMap).containsEntry("output","jdbc.log");
+	}
 
 
 }
