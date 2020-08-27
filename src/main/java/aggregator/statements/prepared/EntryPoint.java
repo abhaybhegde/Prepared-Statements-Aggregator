@@ -17,11 +17,12 @@ public class EntryPoint {
 			Map<String,String> commandLineArgumentsMap = cliHandler.parse(args);
 			String inputFile = commandLineArgumentsMap.get(CommandLineOptions.INPUT_FILE);
 			String outputFile = commandLineArgumentsMap.get(CommandLineOptions.OUTPUT_FILE);
+			String packageName = commandLineArgumentsMap.get(CommandLineOptions.PACKAGE_NAME);
 			FileHandler file = new FileHandler();
-			file.aggregatePreparedStatements(inputFile,outputFile);
+			file.aggregatePreparedStatements(inputFile,outputFile,packageName);
 		} catch (IllegalArgumentException e) {
 			log.debug(e.getMessage(),e);
-			System.err.println("Usage: java -jar <program_name> -input=<path_to_jdbc_log> -output=<output_file>");
+			System.err.println("Usage: java -jar <program_name> -input=<path_to_jdbc_log> -output=<output_file> -package=<packages>:");
 		}
 
 	}

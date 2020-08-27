@@ -24,14 +24,15 @@ public class FileHandler {
 	}
 	
 	
-	public void aggregatePreparedStatements(String inputFile, String outputFile) {
+	public void aggregatePreparedStatements(String inputFile, String outputFile,String packageName) {
 		Path file = Paths.get(inputFile);
 		try {
 			InputStream in = Files.newInputStream(file);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 			String line = null;
+			
 			while((line = reader.readLine()) != null) {
-				if(line.contains(CommandLineOptions.PACKAGE_NAME)) {
+				if(line.contains(packageName)) {
 					System.out.println(line);
 				}
 			}
