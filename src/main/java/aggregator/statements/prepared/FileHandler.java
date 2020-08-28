@@ -14,10 +14,10 @@ public class FileHandler {
 	private String fileName;
 	
 	public FileHandler() {
-		
-		
+		//FIX_ME:Do we need anything here?
 		
 	}
+	
 	public boolean fileExists(String fileName) {
 		File inputFile = new File(fileName);
 		return inputFile.exists();

@@ -22,7 +22,7 @@ public class EntryPoint {
 			file.aggregatePreparedStatements(inputFile,outputFile,packageName);
 		} catch (IllegalArgumentException e) {
 			log.debug(e.getMessage(),e);
-			System.err.println("Usage: java -jar <program_name> -input=<path_to_jdbc_log> -output=<output_file> -package=<packages>:");
+			System.err.println("Usage: java -jar <program_name> -input=<path_to_jdbc_log> -output=<output_file> -package=<packages>");
 		}
 
 	}
