@@ -8,15 +8,21 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 public class FileHandler {
 		
-	private static final Logger log = LogManager.getLogger(FileHandler.class);;
+	private static final Logger log = LogManager.getLogger(FileHandler.class);
+	private static final String SET_STMTS_REGEX = "set[A-Z]";
+	private static final String POSITION_REGEX = "[1-9]+";
 	
 	public FileHandler() {
 		//FIX_ME:Do we need anything here?
@@ -55,6 +61,26 @@ public class FileHandler {
 			System.err.println(ex);
 		}
 
+	}
+
+	protected Map<Integer,String> getValuesForPlaceHolderInCurrentLine(String line) {
+		
+		String setStatements = null;
+		Integer position;
+		int placeHolder = 0;
+		Pattern pattern = Pattern.compile(SET_STMTS_REGEX);
+		Matcher matcher = null;
+		Map<Integer,String> placeHolderToValueMap = new HashMap<Integer, String>();
+		if ( line != null ) {
+			matcher = pattern.matcher(SET_STMTS_REGEX);
+			setStatements = line.substring(matcher.start(), line.length());
+			String subSetStatements = setStatements.split(",")[0];
+			String values = setStatements.split(",")[1];
+			placeHolder = Integer.parseInt(subSetStatements.substring(subSetStatements.indexOf(POSITION_REGEX), subSetStatements.length()));
+			placeHolderToValueMap.put(placeHolder, values);
+			
+		}
+		return placeHolderToValueMap;
 	}
 
 	protected int getTotalPlaceHolderCountInCurrentLine(String line) {

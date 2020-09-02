@@ -3,6 +3,9 @@ package aggregator.statements.prepared;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Test;
 
 public class FileHandlerTest {
@@ -32,6 +35,11 @@ public class FileHandlerTest {
 	
 	@Test
 	public void testName() throws Exception {
+		String line = "setString(1,ValueOne)";
+		Map<Integer,String> positionToValueMap = new HashMap<Integer, String>();
+		FileHandler file = new FileHandler();
+		positionToValueMap = file.getValuesForPlaceHolderInCurrentLine(line);
+		assertThat(positionToValueMap).containsEntry(1,"ValueOne");
 	}
 	
 	
