@@ -21,7 +21,7 @@ import org.apache.log4j.Logger;
 public class FileHandler {
 		
 	private static final Logger log = LogManager.getLogger(FileHandler.class);
-	private static final String SET_STMTS_REGEX = "set[A-Z]";
+	private static final String SET_STMTS_REGEX = "set";
 	private static final String POSITION_REGEX = "[1-9]+";
 	
 	public FileHandler() {
@@ -65,21 +65,21 @@ public class FileHandler {
 
 	protected Map<Integer,String> getValuesForPlaceHolderInCurrentLine(String line) {
 		
-		String setStatements = null;
-		Integer position;
-		int placeHolder = 0;
-		Pattern pattern = Pattern.compile(SET_STMTS_REGEX);
-		Matcher matcher = null;
 		Map<Integer,String> placeHolderToValueMap = new HashMap<Integer, String>();
-		if ( line != null ) {
-			matcher = pattern.matcher(SET_STMTS_REGEX);
-			setStatements = line.substring(matcher.start(), line.length());
-			String subSetStatements = setStatements.split(",")[0];
-			String values = setStatements.split(",")[1];
-			placeHolder = Integer.parseInt(subSetStatements.substring(subSetStatements.indexOf(POSITION_REGEX), subSetStatements.length()));
-			placeHolderToValueMap.put(placeHolder, values);
-			
+		
+		if ( line !=null ) {
+			String [] tokens = line.split(" ");
+			String statement = tokens[tokens.length-1];
+			String setterStatement  = statement.split(",")[0];
+			String valueToSet = statement.split(",")[1];
+			int lastIdxOfClosingBracket = valueToSet.lastIndexOf(')');
+			int firstIdxOfOpeningBracket = setterStatement.lastIndexOf('(');
+			String value = valueToSet.substring(0,lastIdxOfClosingBracket);
+			Integer placeHolder = Integer.parseInt(setterStatement.substring(0, firstIdxOfOpeningBracket));
+			placeHolderToValueMap.put(placeHolder, value);
 		}
+		
+		
 		return placeHolderToValueMap;
 	}
 
