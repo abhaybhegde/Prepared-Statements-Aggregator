@@ -9,9 +9,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -66,21 +68,54 @@ public class FileHandler {
 	protected Map<Integer,String> getValuesForPlaceHolderInCurrentLine(String line) {
 		
 		Map<Integer,String> placeHolderToValueMap = new HashMap<Integer, String>();
+		Stack<String > setStatements = new Stack<String>();
 		
 		if ( line !=null ) {
 			String [] tokens = line.split(" ");
-			String statement = tokens[tokens.length-1];
-			String setterStatement  = statement.split(",")[0];
-			String valueToSet = statement.split(",")[1];
-			int lastIdxOfClosingBracket = valueToSet.lastIndexOf(')');
-			int firstIdxOfOpeningBracket = setterStatement.lastIndexOf('(');
-			String value = valueToSet.substring(0,lastIdxOfClosingBracket);
-			Integer placeHolder = Integer.parseInt(setterStatement.substring(0, firstIdxOfOpeningBracket));
-			placeHolderToValueMap.put(placeHolder, value);
+			int length = tokens.length;
+			int lastCharacterLocation = length -1;
+			
+			while( lastCharacterLocation > 0) {
+				String token = tokens[lastCharacterLocation];
+				if(token != null && token.startsWith("set")) {
+					setStatements.push(token);
+					break;
+				}
+				if(token.matches("\\)")) {
+					setStatements.push(" ");
+				}else {
+					setStatements.push(token);
+				}
+				--lastCharacterLocation;
+			}
+			Integer placeHolder = getPlaceHolder(setStatements.peek());
+			String values = getValues(setStatements);
+			
 		}
 		
 		
 		return placeHolderToValueMap;
+	}
+
+	protected String getValues(Stack<String> setStatements) {
+
+		if(setStatements.isEmpty()) return "";
+
+		if(setStatements.lastElement().isEmpty()) {
+			return " ";
+		}
+		
+		String valuesAsString  = setStatements.toString();
+		int commaPosition = setStatements.indexOf(",")+1;
+		int closingBraceLocation = setStatements.indexOf(")")+1;
+		return valuesAsString.substring(commaPosition, closingBraceLocation);
+	}
+
+	protected Integer getPlaceHolder(String setStatements) {
+		int openBraceLocation = setStatements.indexOf("(")+1;
+		int commaPosition = setStatements.indexOf(",");
+		return Integer.parseInt(setStatements.substring(openBraceLocation, commaPosition));
+		
 	}
 
 	protected int getTotalPlaceHolderCountInCurrentLine(String line) {
