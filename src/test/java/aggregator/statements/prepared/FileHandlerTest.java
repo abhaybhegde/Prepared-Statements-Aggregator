@@ -75,7 +75,7 @@ public class FileHandlerTest {
 		Stack<String> setStatements = new Stack<String>();
 		setStatements.push("07:39:39.117)");
 		setStatements.push("2012-04-12");
-		setStatements.push("setTimestamp(5");
+		setStatements.push("setTimestamp(5,");
 		
 		assertThat(file.getValues(setStatements)).isEqualTo("2012-04-12 07:39:39.117");
 	}

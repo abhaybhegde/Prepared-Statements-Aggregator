@@ -105,10 +105,24 @@ public class FileHandler {
 			return " ";
 		}
 		
-		String valuesAsString  = setStatements.toString();
+		Stack<String> arguments = new Stack<String>();
+		Iterator<String> iterator = setStatements.iterator();
+		while(iterator.hasNext()) {
+			String value = iterator.next();
+			if(value.startsWith("set") && value.endsWith(",")) {
+				break;
+			}
+			
+			if (value.endsWith(")")){
+				value.replace(")", "");
+				arguments.push(value);
+			}
+		}
+		
+		
 		int commaPosition = setStatements.indexOf(",")+1;
 		int closingBraceLocation = setStatements.indexOf(")")+1;
-		return valuesAsString.substring(commaPosition, closingBraceLocation);
+		return null;
 	}
 
 	protected Integer getPlaceHolder(String setStatements) {
