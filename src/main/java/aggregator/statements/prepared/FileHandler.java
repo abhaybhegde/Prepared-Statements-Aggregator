@@ -90,7 +90,7 @@ public class FileHandler {
 			}
 			Integer placeHolder = getPlaceHolder(setStatements.peek());
 			String values = getValues(setStatements);
-			
+			placeHolderToValueMap.put(placeHolder, values);
 		}
 		
 		
@@ -106,23 +106,28 @@ public class FileHandler {
 		}
 		
 		Stack<String> arguments = new Stack<String>();
-		Iterator<String> iterator = setStatements.iterator();
-		while(iterator.hasNext()) {
-			String value = iterator.next();
+		
+		while(!setStatements.isEmpty()) {
+			String value = setStatements.pop();
 			if(value.startsWith("set") && value.endsWith(",")) {
+				continue;
+			}
+			if ( value.endsWith(")") && value.equalsIgnoreCase(")") ) {
+				arguments.push(" ");
 				break;
 			}
+			arguments.push(value.replace(")", ""));
 			
-			if (value.endsWith(")")){
-				value.replace(")", "");
-				arguments.push(value);
-			}
+		}
+		Iterator<String> iterator = arguments.iterator();
+		StringBuilder aggregatedValues = new StringBuilder();
+		while(iterator.hasNext()) {
+			String value = iterator.next();
+			aggregatedValues.append(value);
+			aggregatedValues.append(" ");
 		}
 		
-		
-		int commaPosition = setStatements.indexOf(",")+1;
-		int closingBraceLocation = setStatements.indexOf(")")+1;
-		return null;
+		return aggregatedValues.toString().trim();
 	}
 
 	protected Integer getPlaceHolder(String setStatements) {
