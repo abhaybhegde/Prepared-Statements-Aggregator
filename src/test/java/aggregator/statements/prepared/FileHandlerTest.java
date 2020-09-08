@@ -1,7 +1,6 @@
 package aggregator.statements.prepared;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,10 +48,10 @@ public class FileHandlerTest {
 		assertThat(positionToValueMap).containsEntry(5,"2012-04-12 07:39:39.117");
 		assertThat(positionToValueMap.get(5)).isEqualTo("2012-04-12 07:39:39.117");
 		
-//		line = "2020-08-25 03:26:24,845 DEBUG [jboss.jdbc.spy] (default-threads - 40) java:/XYZ.DS [PreparedStatement] setString(27,ValueTwo)";
-//		positionToValueMap = file.getValuesForPlaceHolderInCurrentLine(line);
-//		assertThat(positionToValueMap).containsEntry(27,"ValueTwo");
-//		assertThat(positionToValueMap.get(27)).isEqualTo("ValueTwo");
+		line = "2020-08-25 03:26:24,845 DEBUG [jboss.jdbc.spy] (default-threads - 40) java:/XYZ.DS [PreparedStatement] setString(27, )";
+		positionToValueMap = file.getValuesForPlaceHolderInCurrentLine(line);
+		assertThat(positionToValueMap).containsEntry(27,"EMPTY_STRING");
+		assertThat(positionToValueMap.get(27)).isEqualTo("EMPTY_STRING");
 	}
 	
 	@Test
@@ -84,7 +83,7 @@ public class FileHandlerTest {
 		setStatements.push(")");
 		setStatements.push("setTimestamp(5,");
 		String result_2  = file.getValues(setStatements);
-		assertThat(result_2).isEqualTo(" ");
+		assertThat(result_2).isEqualTo("EMPTY_STRING");
 	}
 	
 	

@@ -14,8 +14,6 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Stack;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -25,6 +23,7 @@ public class FileHandler {
 	private static final Logger log = LogManager.getLogger(FileHandler.class);
 	private static final String SET_STMTS_REGEX = "set";
 	private static final String POSITION_REGEX = "[1-9]+";
+	private static final String EMPTY_STRING = "EMPTY_STRING";
 	
 	public FileHandler() {
 		//FIX_ME:Do we need anything here?
@@ -39,9 +38,10 @@ public class FileHandler {
 	
 	public void aggregatePreparedStatements(String inputFile, String outputFile,String packageName) {
 		Path file = Paths.get(inputFile);
+		BufferedReader reader = null;
 		try {
 			InputStream in = Files.newInputStream(file);
-			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+			reader = new BufferedReader(new InputStreamReader(in));
 			String line = null;
 			int count = 0;
 			
@@ -61,6 +61,12 @@ public class FileHandler {
 			}
 		} catch(IOException ex) {
 			System.err.println(ex);
+		} finally {
+			try {
+				reader.close();
+			} catch (IOException e) {
+				System.err.println(e);
+			}
 		}
 
 	}
@@ -82,7 +88,7 @@ public class FileHandler {
 					break;
 				}
 				if(token.matches("\\)")) {
-					setStatements.push(" ");
+					setStatements.push(EMPTY_STRING);
 				}else {
 					setStatements.push(token);
 				}
@@ -113,7 +119,7 @@ public class FileHandler {
 				continue;
 			}
 			if ( value.endsWith(")") && value.equalsIgnoreCase(")") ) {
-				arguments.push(" ");
+				arguments.push(EMPTY_STRING);
 				break;
 			}
 			arguments.push(value.replace(")", ""));
