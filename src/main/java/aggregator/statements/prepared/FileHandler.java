@@ -52,9 +52,8 @@ public class FileHandler {
 					aggregatedPreparedStatements.append(line);
 					count = getTotalPlaceHolderCountInCurrentLine(line);
 					while(count > 0) {
-						getValuesForPlaceHolderInCurrentLine(line);
-						linesContainingSubstitutions.add(reader.readLine());
-						
+						String linesHavingSetterMethods = reader.readLine();
+						getValuesForPlaceHolderInCurrentLine(linesHavingSetterMethods);
 						--count;
 					}
 				}

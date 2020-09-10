@@ -52,6 +52,8 @@ public class FileHandlerTest {
 		positionToValueMap = file.getValuesForPlaceHolderInCurrentLine(line);
 		assertThat(positionToValueMap).containsEntry(27,"EMPTY_STRING");
 		assertThat(positionToValueMap.get(27)).isEqualTo("EMPTY_STRING");
+		
+		line = "2020-08-25 03:26:24,845 DEBUG [jboss.jdbc.spy] (default-threads - 40) java:/XYZ.DS [PreparedStatement] setString(27, )";
 	}
 	
 	@Test
