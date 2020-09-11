@@ -39,17 +39,17 @@ public class FileHandlerTest {
 
 	
 	@Test
-	public void givenAStringContainingSetStatement_getValuesForPlaceHolderInCurrentLine_shouldReturn_positionToValueMap() throws Exception {
+	public void givenAStringContainingSetStatement_getValuesForParameterIndex_shouldReturn_positionToValueMap() throws Exception {
 		String line = "2020-08-25 03:26:24,838 DEBUG [jboss.jdbc.spy] (default-threads - 40) java:/ABC.DS [PreparedStatement] setTimestamp(5, 2012-04-12 07:39:39.117)";
 		Map<Integer,String> positionToValueMap = new HashMap<Integer, String>();
 		
-		positionToValueMap = file.getValuesForPlaceHolderInCurrentLine(line);
+		positionToValueMap = file.getValuesForParameterIndex(line);
 		
 		assertThat(positionToValueMap).containsEntry(5,"2012-04-12 07:39:39.117");
 		assertThat(positionToValueMap.get(5)).isEqualTo("2012-04-12 07:39:39.117");
 		
 		line = "2020-08-25 03:26:24,845 DEBUG [jboss.jdbc.spy] (default-threads - 40) java:/XYZ.DS [PreparedStatement] setString(27, )";
-		positionToValueMap = file.getValuesForPlaceHolderInCurrentLine(line);
+		positionToValueMap = file.getValuesForParameterIndex(line);
 		assertThat(positionToValueMap).containsEntry(27,"EMPTY_STRING");
 		assertThat(positionToValueMap.get(27)).isEqualTo("EMPTY_STRING");
 		

@@ -21,8 +21,6 @@ import org.apache.log4j.Logger;
 public class FileHandler {
 		
 	private static final Logger log = LogManager.getLogger(FileHandler.class);
-	private static final String SET_STMTS_REGEX = "set";
-	private static final String POSITION_REGEX = "[1-9]+";
 	private static final String EMPTY_STRING = "EMPTY_STRING";
 	
 	public FileHandler() {
@@ -39,6 +37,7 @@ public class FileHandler {
 	public void aggregatePreparedStatements(String inputFile, String outputFile,String packageName) {
 		Path file = Paths.get(inputFile);
 		BufferedReader reader = null;
+		Map<Integer,String> parameterToValuesMap = new HashMap<Integer, String>();
 		try {
 			InputStream in = Files.newInputStream(file);
 			reader = new BufferedReader(new InputStreamReader(in));
@@ -46,14 +45,14 @@ public class FileHandler {
 			int count = 0;
 			
 			StringBuilder aggregatedPreparedStatements = new StringBuilder();
-			Queue<String> linesContainingSubstitutions = new LinkedList<String>();
+			new LinkedList<String>();
 			while((line = reader.readLine()) != null) {
 				if(line.contains(packageName) && line.contains("prepareStatement")) {
 					aggregatedPreparedStatements.append(line);
 					count = getTotalPlaceHolderCountInCurrentLine(line);
 					while(count > 0) {
 						String linesHavingSetterMethods = reader.readLine();
-						getValuesForPlaceHolderInCurrentLine(linesHavingSetterMethods);
+						parameterToValuesMap = getValuesForParameterIndex(linesHavingSetterMethods);
 						--count;
 					}
 				}
@@ -70,7 +69,7 @@ public class FileHandler {
 
 	}
 
-	protected Map<Integer,String> getValuesForPlaceHolderInCurrentLine(String line) {
+	protected Map<Integer,String> getValuesForParameterIndex(String line) {
 		
 		Map<Integer,String> placeHolderToValueMap = new HashMap<Integer, String>();
 		Stack<String > setStatements = new Stack<String>();
