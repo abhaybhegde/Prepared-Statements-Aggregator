@@ -8,9 +8,11 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Stack;
@@ -38,6 +40,8 @@ public class FileHandler {
 		Path file = Paths.get(inputFile);
 		BufferedReader reader = null;
 		Map<Integer,String> parameterToValuesMap = new HashMap<Integer, String>();
+		List<Map<Integer,String>> allValues = new ArrayList<Map<Integer,String>>();
+		
 		try {
 			InputStream in = Files.newInputStream(file);
 			reader = new BufferedReader(new InputStreamReader(in));
@@ -53,6 +57,7 @@ public class FileHandler {
 					while(count > 0) {
 						String linesHavingSetterMethods = reader.readLine();
 						parameterToValuesMap = getValuesForParameterIndex(linesHavingSetterMethods);
+						allValues.add(parameterToValuesMap);
 						--count;
 					}
 				}
