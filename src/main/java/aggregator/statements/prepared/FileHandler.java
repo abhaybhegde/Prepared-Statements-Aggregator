@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Stack;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -24,6 +26,7 @@ public class FileHandler {
 		
 	private static final Logger log = LogManager.getLogger(FileHandler.class);
 	private static final String EMPTY_STRING = "EMPTY_STRING";
+	private static final String PLACE_HOLDER_REGEX =  "(\\?)";
 	
 	public FileHandler() {
 		//FIX_ME:Do we need anything here?
@@ -62,6 +65,8 @@ public class FileHandler {
 					}
 				}
 			}
+			String finalQuery =getQueryWithValuesSubstitued(aggregatedPreparedStatements,allValues);
+			
 		} catch(IOException ex) {
 			System.err.println(ex);
 		} finally {
@@ -72,6 +77,37 @@ public class FileHandler {
 			}
 		}
 
+	}
+
+	protected String getQueryWithValuesSubstitued(StringBuilder aggregatedPreparedStatements,
+			List<Map<Integer, String>> allValues) {
+		Pattern placeHolder = Pattern.compile(PLACE_HOLDER_REGEX);
+		
+		Matcher matcher = placeHolder.matcher(aggregatedPreparedStatements);
+		
+		getStartAndEndPosition(matcher,aggregatedPreparedStatements);
+		
+//		aggregatedPreparedStatements.re
+		
+		
+		
+		return null;
+	}
+
+	protected void getStartAndEndPosition(Matcher matcher, StringBuilder aggregatedPreparedStatements) {
+		int start = 0;
+		int end = 0;
+		List<Integer> positions = new ArrayList<Integer>();
+		while(matcher.find()) {
+			start = matcher.start();
+			end = matcher.end();
+			positions.add(start);
+			positions.add(end);
+		}
+		System.out.println(positions.toString());
+		
+		
+		
 	}
 
 	protected Map<Integer,String> getValuesForParameterIndex(String line) {
