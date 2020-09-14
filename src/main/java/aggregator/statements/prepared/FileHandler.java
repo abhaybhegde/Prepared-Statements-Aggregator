@@ -85,7 +85,7 @@ public class FileHandler {
 		
 		Matcher matcher = placeHolder.matcher(aggregatedPreparedStatements);
 		
-		getStartAndEndPosition(matcher,aggregatedPreparedStatements);
+		getStartAndEndPosition(matcher,aggregatedPreparedStatements,allValues);
 		
 //		aggregatedPreparedStatements.re
 		
@@ -94,13 +94,17 @@ public class FileHandler {
 		return null;
 	}
 
-	protected void getStartAndEndPosition(Matcher matcher, StringBuilder aggregatedPreparedStatements) {
+	protected void getStartAndEndPosition(Matcher matcher, StringBuilder aggregatedPreparedStatements, List<Map<Integer, String>> allValues) {
 		int start = 0;
 		int end = 0;
+		int count =0;
 		List<Integer> positions = new ArrayList<Integer>();
+		System.out.println(matcher.groupCount());
 		while(matcher.find()) {
+			++count;
 			start = matcher.start();
 			end = matcher.end();
+			aggregatedPreparedStatements.replace(start, end, allValues);
 			positions.add(start);
 			positions.add(end);
 		}
