@@ -111,7 +111,12 @@ public class FileHandlerTest {
 		StringBuilder aggregatedPreparedStatements = new StringBuilder();
 		aggregatedPreparedStatements.append("2020-08-28 00:20:50,333 DEBUG [jboss.jdbc.spy] (default-threads - 17) java:/ABC.DS [Connection] prepareStatement(insert into TableOne (COL_1, COL_2, COL-3) values (?, ?, ?))");
 		Matcher matcher = placeHolder.matcher(aggregatedPreparedStatements);
-		file.getStartAndEndPosition(matcher, aggregatedPreparedStatements);
+		List<Map<Integer, String>> allValues = new ArrayList<Map<Integer,String>>();
+		Map<Integer,String> value = new HashMap<Integer, String>();
+		value.put(1, "20");
+		value.put(2, "EMPTY_STRING");
+		value.put(3,"First LastName");
+		file.getStartAndEndPosition(matcher, aggregatedPreparedStatements,allValues);
 	}
 	
 	

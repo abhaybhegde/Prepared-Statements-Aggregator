@@ -104,7 +104,7 @@ public class FileHandler {
 			++count;
 			start = matcher.start();
 			end = matcher.end();
-			aggregatedPreparedStatements.replace(start, end, allValues);
+			aggregatedPreparedStatements.replace(start, end, allValues.get(1).get(Integer.parseInt("1")));
 			positions.add(start);
 			positions.add(end);
 		}
