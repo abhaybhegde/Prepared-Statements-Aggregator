@@ -55,14 +55,28 @@ public class FileHandler {
 			new LinkedList<String>();
 			while((line = reader.readLine()) != null) {
 				if(line.contains(packageName) && line.contains("prepareStatement")) {
+					/*1. Initiallize QueryParser here*/
+					/*2. Get the current query with placeholders*/
+					
 					aggregatedPreparedStatements.append(line);
 					count = getTotalPlaceHolderCountInCurrentLine(line);
 					while(count > 0) {
+						/*3. Store the intermediate Statements in a Queue.
+						 * */
 						String linesHavingSetterMethods = reader.readLine();
 						parameterToValuesMap = getValuesForParameterIndex(linesHavingSetterMethods);
 						allValues.add(parameterToValuesMap);
 						--count;
 					}
+					/*4. Get current set of Statements from 3..
+					 * */
+					/*5. Get Values to be substituted into 2.
+					 * */
+					/*6. Pass output from 2. and 5. to a method which will return final query
+					 *   with all values substituted.
+					 * */
+
+					
 				}
 			}
 			String finalQuery =getQueryWithValuesSubstitued(aggregatedPreparedStatements,allValues);
