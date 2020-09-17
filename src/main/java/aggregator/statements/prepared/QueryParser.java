@@ -33,8 +33,6 @@ public class QueryParser {
 		queryQueue.add(currentQuery);
 		
 	}
-	
-
 
 	public StringBuilder getCurrentQuery() {
 		StringBuilder currentQuery = new StringBuilder();
@@ -50,7 +48,15 @@ public class QueryParser {
 		
 	}
 	
-	
+	protected int getTotalPlaceHolderCountInCurrentLine(String line) {
+		int count =0;
+		try {
+			count =  (line.length() - line.replace("?", "").length());
+		} catch (NullPointerException ex) {
+			log.error(ex.getMessage());
+		}
+		return count;
+	}
 	
 	
 }

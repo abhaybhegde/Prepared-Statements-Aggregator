@@ -56,10 +56,13 @@ public class FileHandler {
 			while((line = reader.readLine()) != null) {
 				if(line.contains(packageName) && line.contains("prepareStatement")) {
 					/*1. Initiallize QueryParser here*/
-					/*2. Get the current query with placeholders*/
+					QueryParser queryParser = new QueryParser(line);
 					
+					/*2. Get the current query with place holders*/
+					StringBuilder currentQuery = new StringBuilder();
+					currentQuery = queryParser.getCurrentQuery();
+					count= queryParser.getTotalPlaceHolderCountInCurrentLine(currentQuery.toString());
 					aggregatedPreparedStatements.append(line);
-					count = getTotalPlaceHolderCountInCurrentLine(line);
 					while(count > 0) {
 						/*3. Store the intermediate Statements in a Queue.
 						 * */
@@ -79,7 +82,7 @@ public class FileHandler {
 					
 				}
 			}
-			String finalQuery =getQueryWithValuesSubstitued(aggregatedPreparedStatements,allValues);
+			String finalQuery = getQueryWithValuesSubstitued(aggregatedPreparedStatements,allValues);
 			
 		} catch(IOException ex) {
 			System.err.println(ex);
@@ -200,14 +203,5 @@ public class FileHandler {
 		
 	}
 
-	protected int getTotalPlaceHolderCountInCurrentLine(String line) {
-		int count =0;
-		try {
-			count =  (line.length() - line.replace("?", "").length());
-		} catch (NullPointerException ex) {
-			log.error(ex.getMessage());
-		}
-		return count;
-	}
 
 }
