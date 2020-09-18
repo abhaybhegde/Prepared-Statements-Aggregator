@@ -20,18 +20,26 @@ public class QueryParser {
 	private StringBuilder currentQuery;
 	
 	public QueryParser(String query) {
-		Matcher matcher = rawQueryPattern.matcher(query);
-		while(matcher.find()) {
-			rawQuery = matcher.group(1);
-		}
-		log.debug("Parsed Query:"+rawQuery);
+		setCurrentQuery(query);
+		
+	}
+
+	private void setCurrentQuery(String query) {
+		
 		currentQuery = new StringBuilder();
-		if(rawQuery != null) {
-			currentQuery =  new StringBuilder(rawQuery.trim().subSequence(1, rawQuery.length()-1));
+		if (query != null) {
+			Matcher matcher = rawQueryPattern.matcher(query);
+			while (matcher.find()) {
+				rawQuery = matcher.group(1);
+			}
+			log.debug("Parsed Query:" + rawQuery);
+			
+			if (rawQuery != null) {
+				currentQuery = new StringBuilder(rawQuery.trim().subSequence(1, rawQuery.length() - 1));
+			} 
 		}
 		queryQueue = new LinkedList<StringBuilder>();
 		queryQueue.add(currentQuery);
-		
 	}
 
 	public StringBuilder getCurrentQuery() {
@@ -48,12 +56,15 @@ public class QueryParser {
 		
 	}
 	
-	protected int getTotalPlaceHolderCountInCurrentLine(String line) {
+	protected int getTotalPlaceHoldersInCurrentQuery() {
 		int count =0;
+		StringBuilder currentQuery = new StringBuilder();
 		try {
-			count =  (line.length() - line.replace("?", "").length());
+			currentQuery = getCurrentQuery();
+			count =  (currentQuery.length() - currentQuery.toString().replace("?", "").length());
 		} catch (NullPointerException ex) {
 			log.error(ex.getMessage());
+			count =  -1;
 		}
 		return count;
 	}

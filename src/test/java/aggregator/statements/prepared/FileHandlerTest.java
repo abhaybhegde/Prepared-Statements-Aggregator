@@ -16,8 +16,6 @@ import org.junit.Test;
 
 public class FileHandlerTest {
 
-	private static final String SQL_STMT_WITH_SEVEN_PLACEHOLDERS = "(insert into table (columun1,column2,column3,column4,column5,column6,column7) values (?,?,?,?,?,?,?))";
-	private static final String SQL_STMT_WITH_ONE_PLACEHOLDERS = "(insert into table (columun1) values (?))";
 	private static final String PLACE_HOLDER_REGEX = "(\\?)";
 
 	private FileHandler file;
@@ -27,20 +25,6 @@ public class FileHandlerTest {
 		file = new FileHandler();
 	}
 	
-	@Test
-	public void givenSQLStatmentWithSevenPlaceHolders_getTotalPlaceHolderCountInCurrentLine_shouldReturn_Seven() throws Exception {
-		assertThat(file.getTotalPlaceHolderCountInCurrentLine(SQL_STMT_WITH_SEVEN_PLACEHOLDERS)).isEqualTo(7);
-	}
-
-	@Test
-	public void forNullInput_getTotalPlaceHolderCountInCurrentLine_shouldReturn_zero() throws Exception {
-		assertThat(file.getTotalPlaceHolderCountInCurrentLine(null)).isEqualTo(0);
-	}
-	
-	@Test
-	public void givenSQLStatmentWithOnePlaceHolders_getTotalPlaceHolderCountInCurrentLine_shouldReturn_One() throws Exception {
-		assertThat(file.getTotalPlaceHolderCountInCurrentLine(SQL_STMT_WITH_ONE_PLACEHOLDERS)).isEqualTo(1);
-	}
 	
 	@Test
 	public void givenAStringContainingSetStatement_getValuesForParameterIndex_shouldReturn_positionToValueMap() throws Exception {
