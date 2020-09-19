@@ -12,6 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class FileHandlerTest {
@@ -76,6 +77,7 @@ public class FileHandlerTest {
 		assertThat(result_2).isEqualTo("EMPTY_STRING");
 	}
 	
+	@Ignore
 	@Test
 	public void givenSqlQueryWithPlaceHolders_getQueryWithValuesSubstitued_shouldReturnQueryWithValues() throws Exception {
 		StringBuilder aggregatedPreparedStatements = new StringBuilder();
@@ -89,6 +91,7 @@ public class FileHandlerTest {
 		assertThat(result).isEqualTo("insert into TableOne (COL_1, COL_2, COL_3) values (20, , \"First LastName\")");
 	}
 	
+	@Ignore
 	@Test
 	public void testName() throws Exception {
 		Pattern placeHolder = Pattern.compile(PLACE_HOLDER_REGEX);
