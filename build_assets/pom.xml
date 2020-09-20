@@ -57,7 +57,7 @@
 		<finalName>${project.artifactId}</finalName>
 		
 		<filters>
-			<filter>profiles/${build.profile.id}/config.properties</filter>
+			<filter>../profiles/${build.profile.id}/config.properties</filter>
 	    </filters>
 		
 		<plugins>
