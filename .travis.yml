@@ -4,4 +4,4 @@ jdk:
 script: 
       - bash build_with_unit_tests_only.sh
 after_success:
-      - bash acceptance_/tests/execute_test.sh
+      - bash acceptance_tests/execute_test.sh
