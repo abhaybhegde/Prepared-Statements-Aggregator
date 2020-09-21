@@ -1,0 +1,21 @@
+2020-08-28 00:20:50,333 DEBUG [jboss.jdbc.spy] (default-threads - 17) java:/ABC.DS [DataSource] getConnection()
+2020-08-28 00:20:50,333 DEBUG [jboss.jdbc.spy] (default-threads - 17) java:/ABC.DS [Connection] prepareStatement(insert into EMPLOYEE (FIRST_NAME, MIDDLE_NAME, LAST_NAME) values (?, ?, ?))
+2020-08-28 00:20:50,333 DEBUG [jboss.jdbc.spy] (default-threads - 17) java:/ABC.DS [PreparedStatement] setString(1, Narendra)
+2020-08-28 00:20:50,333 DEBUG [jboss.jdbc.spy] (default-threads - 17) java:/ABC.DS [PreparedStatement] setString(2, )
+2020-08-28 00:20:50,333 DEBUG [jboss.jdbc.spy] (default-threads - 17) java:/ABC.DS [PreparedStatement] setString(3, Mode)
+2020-08-28 00:20:50,333 DEBUG [jboss.jdbc.spy] (default-threads - 17) java:/ABC.DS [PreparedStatement] executeUpdate()
+2020-08-28 00:20:50,334 DEBUG [jboss.jdbc.spy] (default-threads - 17) java:/ABC.DS [PreparedStatement] getMaxRows()
+2020-08-28 00:20:50,334 DEBUG [jboss.jdbc.spy] (default-threads - 17) java:/ABC.DS [PreparedStatement] getQueryTimeout()
+2020-08-28 00:20:50,334 DEBUG [jboss.jdbc.spy] (default-threads - 17) java:/ABC.DS [PreparedStatement] close()
+2020-08-28 00:20:50,334 DEBUG [com.domain.application] (EJB default - 2) Inserted Employee: Narendra Mode succesfully into table EMPLOYEE
+2020-08-28 00:20:50,333 DEBUG [jboss.jdbc.spy] (default-threads - 17) java:/ABC.DS [DataSource] getConnection()
+2020-08-28 00:20:50,333 DEBUG [jboss.jdbc.spy] (default-threads - 17) java:/ABC.DS [Connection] prepareStatement(select FIRST_NAME,LAST_NAME from EMPLOYEE where FIRST_NAME= ?)
+2020-08-28 00:20:50,333 DEBUG [jboss.jdbc.spy] (default-threads - 17) java:/ABC.DS [PreparedStatement] setString(1, Narendra)
+2020-08-28 00:20:50,333 DEBUG [jboss.jdbc.spy] (default-threads - 17) java:/ABC.DS [PreparedStatement] executeQuery()
+2020-08-28 00:20:50,334 DEBUG [jboss.jdbc.spy] (default-threads - 17) java:/ABC.DS [PreparedStatement] next()
+2020-08-28 00:20:50,334 DEBUG [jboss.jdbc.spy] (default-threads - 17) java:/ABC.DS [PreparedStatement] getString()
+2020-08-28 00:20:50,334 DEBUG [jboss.jdbc.spy] (default-threads - 17) java:/ABC.DS [PreparedStatement] close()
+2020-08-28 00:20:50,334 DEBUG [com.domain.application] (EJB default - 2) Retrieved Employee: Narendra 
+
+
+
