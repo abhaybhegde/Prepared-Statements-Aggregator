@@ -60,7 +60,7 @@ public class FileHandler {
 					
 					/*2. Get the current query with place holders*/
 					StringBuilder currentQuery =  queryParser.getCurrentQuery();
-					count= queryParser.getTotalPlaceHoldersInCurrentQuery();
+					count= queryParser.getTotalPlaceHoldersInCurrentQuery(currentQuery);
 					aggregatedPreparedStatements.append(line);
 					while(count > 0) {
 						/*3. Store the intermediate Statements in a Queue.

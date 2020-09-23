@@ -56,11 +56,9 @@ public class QueryParser {
 		
 	}
 	
-	protected int getTotalPlaceHoldersInCurrentQuery() {
+	protected int getTotalPlaceHoldersInCurrentQuery(StringBuilder currentQuery) {
 		int count =0;
-		StringBuilder currentQuery = new StringBuilder();
 		try {
-			currentQuery = getCurrentQuery();
 			count =  (currentQuery.length() - currentQuery.toString().replace("?", "").length());
 		} catch (NullPointerException ex) {
 			log.error(ex.getMessage());

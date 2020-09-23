@@ -24,19 +24,22 @@ public class QueryParserTest {
 	@Test
 	public void givenSQLStatmentWithSevenPlaceHolders_getTotalPlaceHolderCountInCurrentLine_shouldReturn_Seven() throws Exception {
 		QueryParser queryParser = new QueryParser(SQL_STMT_WITH_SEVEN_PLACEHOLDERS);
-		assertThat(queryParser.getTotalPlaceHoldersInCurrentQuery()).isEqualTo(7);
+		StringBuilder currentQuery = queryParser.getCurrentQuery();
+		assertThat(queryParser.getTotalPlaceHoldersInCurrentQuery(currentQuery)).isEqualTo(7);
 	}
 
 	@Test
 	public void forQueriesWithNoPlaceHolders_getTotalPlaceHoldersInCurrentQuery_shouldReturn_zero() throws Exception {
 		QueryParser queryParser = new QueryParser(QUERY_WITH_NO_PLACEHOLDERS);
-		assertThat(queryParser.getTotalPlaceHoldersInCurrentQuery()).isEqualTo(0);
+		StringBuilder currentQuery = queryParser.getCurrentQuery();
+		assertThat(queryParser.getTotalPlaceHoldersInCurrentQuery(currentQuery)).isEqualTo(0);
 	}
 	
 	@Test
 	public void givenSQLStatmentWithOnePlaceHolders_getTotalPlaceHolderCountInCurrentLine_shouldReturn_One() throws Exception {
 		QueryParser queryParser = new QueryParser(SQL_STMT_WITH_ONE_PLACEHOLDERS);
-		assertThat(queryParser.getTotalPlaceHoldersInCurrentQuery()).isEqualTo(1);
+		StringBuilder currentQuery = queryParser.getCurrentQuery();
+		assertThat(queryParser.getTotalPlaceHoldersInCurrentQuery(currentQuery)).isEqualTo(1);
 	}
 	
 	
